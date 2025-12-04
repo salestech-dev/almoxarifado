@@ -1,0 +1,42 @@
+@model Almoxarifado.Models.Produtos
+
+@{
+    ViewData["Title"] = "Adicionar Produto";
+}
+
+<div class="container mt-4">
+    <h1>Adicionar Novo Produto</h1>
+    
+    <form asp-action="AddProduto" method="post">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="quantidade" class="form-label">Quantidade Inicial</label>
+            <input type="number" class="form-control" id="quantidade" name="quantidade" min="0" required>
+            <div class="form-text">Quantidade inicial do produto no estoque</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="estoqueMinimo" class="form-label">Estoque Mínimo</label>
+            <input type="number" class="form-control" id="estoqueMinimo" name="estoqueMinimo" value="10" min="1" required>
+            <div class="form-text">Quantidade mínima antes do alerta crítico (padrão: 10 unidades)</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="dataEntrada" class="form-label">Data de Entrada</label>
+            <input type="date" class="form-control" id="dataEntrada" name="dataEntrada" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="peso" class="form-label">Peso</label>
+            <input type="text" class="form-control" id="peso" name="peso" placeholder="Ex: 5kg, 250g, 2ton" required>
+            <div class="form-text">Peso unitário ou total do produto</div>
+        </div>
+        
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="/Produtos" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

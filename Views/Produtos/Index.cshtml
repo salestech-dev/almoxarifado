@@ -1,0 +1,185 @@
+@model List<Almoxarifado.Models.Produtos>
+
+@{
+    ViewData["Title"] = "Lista de Produtos";
+}
+
+<div class="container mt-4">
+    <h1>Lista de Produtos</h1>
+    
+    <!-- Alertas de mensagens -->
+    @if (TempData["Sucesso"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>✓ Sucesso!</strong> @TempData["Sucesso"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    
+    @if (TempData["Erro"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>✗ Erro!</strong> @TempData["Erro"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    
+    @if (TempData["Alerta"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>⚠ Atenção!</strong> @TempData["Alerta"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    
+    <!-- Alerta geral de produtos críticos -->
+    @if (ViewBag.ProdutosCriticos != null && ViewBag.ProdutosCriticos > 0)
+    {
+        <div class="alert alert-danger">
+            <strong>🚨 ALERTA GERAL:</strong> Existem <strong>@ViewBag.ProdutosCriticos produto(s)</strong> com estoque crítico ou esgotado!
+            <a href="/Produtos/Criticos" class="alert-link">Ver produtos críticos</a>
+        </div>
+    }
+    
+    <!-- Campo de Busca -->
+    <div class="mb-3">
+        <form method="get" action="/Produtos/Index" class="row g-2">
+            <div class="col-md-8">
+                <input type="text" name="busca" class="form-control" placeholder="Buscar produto por nome ou ID..." value="@ViewBag.BuscaAtual" />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">🔍 Buscar</button>
+            </div>
+            <div class="col-md-2">
+                <a href="/Produtos/Index" class="btn btn-secondary w-100">✖ Limpar</a>
+            </div>
+        </form>
+    </div>
+    
+    <div class="d-flex justify-content-between mb-3">
+        <a href="/Produtos/Criar" class="btn btn-primary">➕ Adicionar Novo Produto</a>
+        <a href="/Produtos/Criticos" class="btn btn-danger">⚠ Ver Produtos Críticos</a>
+    </div>
+    
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Quantidade</th>
+                        <th>Status</th>
+                        <th>Estoque Mínimo</th>
+                        <th>Data de Entrada</th>
+                        <th>Peso</th>
+                        <th>Movimentação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var produto in Model)
+                    {
+                        <tr class="@(produto.StatusEstoque == "Critico" || produto.StatusEstoque == "Esgotado" ? "table-danger" : 
+                                     produto.StatusEstoque == "Atencao" ? "table-warning" : "")">
+                            <td>@produto.id</td>
+                            <td><strong>@produto.nome</strong></td>
+                            <td>
+                                <span class="badge bg-@produto.CorAlerta" style="font-size: 1em;">
+                                    @produto.quantidade un
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-@produto.CorAlerta">
+                                    @produto.StatusEstoque
+                                </span>
+                            </td>
+                            <td>@produto.estoqueMinimo un</td>
+                            <td>@produto.dataEntrada.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@produto.peso</td>
+                            <td>
+                                <!-- Botão Entrada -->
+                                <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modalEntrada@(produto.id)">
+                                    ⬆ Entrada
+                                </button>
+                                
+                                <!-- Botão Saída -->
+                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalSaida@(produto.id)"
+                                        @(produto.quantidade == 0 ? "disabled" : "")>
+                                    ⬇ Saída
+                                </button>
+                                
+                                <!-- Modal Entrada -->
+                                <div class="modal fade" id="modalEntrada@(produto.id)" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-success text-white">
+                                                <h5 class="modal-title">Entrada de Estoque - @produto.nome</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <form method="post" action="/Produtos/Entrada/@produto.id">
+                                                <div class="modal-body">
+                                                    <p>Estoque atual: <strong>@produto.quantidade unidades</strong></p>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Quantidade a adicionar:</label>
+                                                        <input type="number" name="quantidade" class="form-control" min="1" required />
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-success">Confirmar Entrada</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Modal Saída -->
+                                <div class="modal fade" id="modalSaida@(produto.id)" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-info text-white">
+                                                <h5 class="modal-title">Saída de Estoque - @produto.nome</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <form method="post" action="/Produtos/Saida/@produto.id">
+                                                <div class="modal-body">
+                                                    <p>Estoque atual: <strong>@produto.quantidade unidades</strong></p>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Quantidade a retirar:</label>
+                                                        <input type="number" name="quantidade" class="form-control" min="1" max="@produto.quantidade" required />
+                                                    </div>
+                                                    @if (produto.quantidade <= produto.estoqueMinimo)
+                                                    {
+                                                        <div class="alert alert-warning">
+                                                            ⚠ Atenção: Este produto já está com estoque baixo!
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-info">Confirmar Saída</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <a href="/Produtos/Edit/@produto.id" class="btn btn-sm btn-warning">✏ Editar</a>
+                                <form method="post" action="/Produtos/Delete/@produto.id" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja deletar este produto?')">🗑 Deletar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="alert alert-info">Nenhum produto cadastrado ainda.</p>
+    }
+</div>

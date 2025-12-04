@@ -1,0 +1,11 @@
+﻿@model List<Produtos>
+@{
+  ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bem-vindo ao Almoxarifado</h1>
+    <p class="lead">Gerencie seus produtos de forma eficiente.</p>
+    <a class="btn btn-primary" asp-controller="Produtos" asp-action="Index">Ver Produtos</a>
+    <a class="btn btn-success" asp-controller="Produtos" asp-action="Criar">Adicionar Produto</a>
+</div>

@@ -1,0 +1,60 @@
+@model Almoxarifado.Models.Produtos
+
+@{
+    ViewData["Title"] = "Editar Produto";
+}
+
+<div class="container mt-4">
+    <h1>Editar Produto</h1>
+    
+    <form asp-action="EditProduto" method="post">
+        <input type="hidden" name="id" value="@Model.id" />
+        
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" value="@Model.nome" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="quantidade" class="form-label">Quantidade</label>
+            <input type="number" class="form-control" id="quantidade" name="quantidade" value="@Model.quantidade" required>
+            <div class="form-text">Estoque atual do produto</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="estoqueMinimo" class="form-label">Estoque Mínimo</label>
+            <input type="number" class="form-control" id="estoqueMinimo" name="estoqueMinimo" value="@Model.estoqueMinimo" required min="1">
+            <div class="form-text">Quantidade mínima antes do alerta crítico (recomendado: 10 unidades)</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="dataEntrada" class="form-label">Data de Entrada</label>
+            <input type="date" class="form-control" id="dataEntrada" name="dataEntrada" value="@Model.dataEntrada.ToString("yyyy-MM-dd")" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="peso" class="form-label">Peso</label>
+            <input type="text" class="form-control" id="peso" name="peso" value="@Model.peso" required>
+        </div>
+        
+        <!-- Status do Estoque -->
+        <div class="alert alert-@Model.CorAlerta">
+            <strong>Status Atual:</strong> @Model.StatusEstoque
+            @if (Model.StatusEstoque == "Critico" || Model.StatusEstoque == "Esgotado")
+            {
+                <br><small>⚠ Este produto precisa de reposição urgente!</small>
+            }
+            else if (Model.StatusEstoque == "Atencao")
+            {
+                <br><small>⚠ Atenção: estoque está ficando baixo.</small>
+            }
+            else
+            {
+                <br><small>✓ Estoque em níveis adequados.</small>
+            }
+        </div>
+        
+        <button type="submit" class="btn btn-success">Salvar Alterações</button>
+        <a href="/Produtos" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

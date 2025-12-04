@@ -1,0 +1,138 @@
+@model List<Almoxarifado.Models.Produtos>
+
+@{
+    ViewData["Title"] = "Produtos Críticos";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-danger">🚨 Produtos com Estoque Crítico</h1>
+        <a href="/Produtos/Index" class="btn btn-secondary">← Voltar</a>
+    </div>
+    
+    @if (Model != null && Model.Any())
+    {
+        <div class="alert alert-danger">
+            <strong>Atenção!</strong> Os produtos abaixo estão com estoque crítico ou esgotado. Providencie a reposição o quanto antes!
+        </div>
+        
+        <div class="row">
+            @foreach (var produto in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card border-@produto.CorAlerta">
+                        <div class="card-header bg-@produto.CorAlerta text-white">
+                            <h5 class="card-title mb-0">@produto.nome</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <strong>Estoque Atual:</strong>
+                                </div>
+                                <div class="col-6">
+                                    <span class="badge bg-@produto.CorAlerta" style="font-size: 1.2em;">
+                                        @produto.quantidade un
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <strong>Estoque Mínimo:</strong>
+                                </div>
+                                <div class="col-6">
+                                    @produto.estoqueMinimo un
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <strong>Status:</strong>
+                                </div>
+                                <div class="col-6">
+                                    <span class="badge bg-@produto.CorAlerta">
+                                        @produto.StatusEstoque
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <strong>Peso:</strong>
+                                </div>
+                                <div class="col-6">
+                                    @produto.peso
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <small class="text-muted">
+                                        Última entrada: @produto.dataEntrada.ToString("dd/MM/yyyy HH:mm")
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            @if (produto.quantidade == 0)
+                            {
+                                <div class="alert alert-danger mb-2">
+                                    <strong>ESGOTADO!</strong> Reposição urgente necessária.
+                                </div>
+                            }
+                            else if (produto.quantidade <= produto.estoqueMinimo)
+                            {
+                                <div class="alert alert-warning mb-2">
+                                    <strong>CRÍTICO!</strong> Apenas @produto.quantidade unidades restantes.
+                                </div>
+                            }
+                            
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalEntrada@(produto.id)">
+                                    ⬆ Dar Entrada
+                                </button>
+                                <a href="/Produtos/Edit/@produto.id" class="btn btn-warning btn-sm">
+                                    ✏ Editar Produto
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Modal Entrada -->
+                    <div class="modal fade" id="modalEntrada@(produto.id)" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-success text-white">
+                                    <h5 class="modal-title">Entrada de Estoque - @produto.nome</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <form method="post" action="/Produtos/Entrada/@produto.id">
+                                    <div class="modal-body">
+                                        <p>Estoque atual: <strong class="text-danger">@produto.quantidade unidades</strong></p>
+                                        <p>Estoque mínimo: <strong>@produto.estoqueMinimo unidades</strong></p>
+                                        <div class="mb-3">
+                                            <label class="form-label">Quantidade a adicionar:</label>
+                                            <input type="number" name="quantidade" class="form-control" min="1" 
+                                                   placeholder="Recomendado: mínimo @(produto.estoqueMinimo - produto.quantidade) unidades" required />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-success">Confirmar Entrada</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success">
+            <h4>✓ Tudo tranquilo!</h4>
+            <p class="mb-0">Nenhum produto com estoque crítico no momento. Todos os produtos estão com quantidades adequadas.</p>
+        </div>
+        <a href="/Produtos/Index" class="btn btn-primary">Ver Todos os Produtos</a>
+    }
+</div>

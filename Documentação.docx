@@ -1,0 +1,85 @@
+
+DATA: 04 de Dezembro de 2025
+VERSÃO: 1.0
+
+
+MÓDULO DE GESTÃO DE PRODUTOS
+
+
+Cadastro de Produtos
+ O sistema deve permitir cadastrar novos produtos
+   Campos obrigatórios:
+    Nome do produto
+    Quantidade
+    Data de entrada
+    Peso
+
+
+Listagem de Produtos
+  O sistema deve exibir lista de todos os produtos cadastrados
+   Informações exibidas:
+    Nome
+    Quantidade
+    Data de entrada (formato DD/MM/YYYY)
+    Peso
+    Ações (Editar/Deletar)
+
+
+Edição de Produtos
+ O sistema deve permitir editar produtos existentes
+   Campos editáveis:
+    Nome do produto
+    Quantidade
+    Data de entrada
+    Peso
+
+
+Exclusão de Produtos
+  O sistema deve permitir deletar produtos
+  Confirmação antes de deletar (JavaScript)
+  Remoção permanente do banco de dados
+
+Interface Responsiva
+  Interface deve ser responsiva e funcionar em diferentes dispositivos
+  Utilização do Bootstrap para layout
+
+
+  =========INFRAESTRUTURA==========
+  PLATAFORMA E FRAMEWORKS = 
+
+    Framework de Desenvolvimento
+  ASP.NET Core 8.0 ou superior
+  C# 12.0 ou superior
+  Runtime: .NET 8.0
+
+    Padrão de Arquitetura
+  Padrão MVC (Model-View-Controller)
+  Repository Pattern para acesso a dados
+  Dependency Injection nativa do ASP.NET Core
+
+    Frontend
+  Razor Pages (.cshtml)
+  Bootstrap 5.x para estilização
+
+
+BANCO DE DADOS = 
+
+  Gerenciador de Banco de Dados
+    MySQL Server 8
+
+
+    ORM e Migrations
+   Entity Framework Core 8.0 ou superior
+   EF Core Migrations para versionamento do schema
+   pAOTE: Pomelo.EntityFrameworkCore.MySql
+
+  Connection String
+   Configuração em appsettings.json
+   Nome da conexão: "DefaultDatabase"
+
+    Pacotes Essenciais
+  Microsoft.EntityFrameworkCore
+  Microsoft.EntityFrameworkCore.Design
+  Pomelo.EntityFrameworkCore.MySql
+  Microsoft.Extensions.DependencyInjection
+
