@@ -209,3 +209,4 @@ C:\Users\Aluno SENAI.C308-LAB3-001\Desktop\ORLANDO LUCAS DA SILVA PINHO SALES\ob
 C:\Users\Aluno SENAI.C308-LAB3-001\Desktop\ORLANDO LUCAS DA SILVA PINHO SALES\obj\Debug\net8.0\Almoxarifado.pdb
 C:\Users\Aluno SENAI.C308-LAB3-001\Desktop\ORLANDO LUCAS DA SILVA PINHO SALES\obj\Debug\net8.0\Almoxarifado.genruntimeconfig.cache
 C:\Users\Aluno SENAI.C308-LAB3-001\Desktop\ORLANDO LUCAS DA SILVA PINHO SALES\obj\Debug\net8.0\ref\Almoxarifado.dll
+C:\Users\Aluno SENAI.C308-LAB3-001\Desktop\almoxarifado\obj\Debug\net8.0\Almoxarifado.sourcelink.json

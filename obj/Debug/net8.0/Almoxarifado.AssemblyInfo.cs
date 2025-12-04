@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Almoxarifado")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bbfea4425f27b75f7e6771cc4afff62bfb8010aa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+03960dc88dc37adbb3be0cd9dbc43377c9176ba2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Almoxarifado")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Almoxarifado")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
