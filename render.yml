@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: almoxarifado
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    region: oregon
+    envVars:
+      - key: ConnectionStrings__Default
+        value: "server=localhost;database=saep_db;user=root;password=Filhos02@"

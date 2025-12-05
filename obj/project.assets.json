@@ -2468,24 +2468,25 @@
     "net8.0": [
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.0",
       "Microsoft.EntityFrameworkCore >= 8.0.0",
+      "Microsoft.EntityFrameworkCore.Design >= 8.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.0",
       "Pomelo.EntityFrameworkCore.MySql >= 8.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Aluno SENAI.C308-LAB3-001\\.nuget\\packages\\": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Aluno SENAI.C308-LAB3-001\\Desktop\\almoxarifado\\Almoxarifado.csproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\almoxarifado\\Almoxarifado.csproj",
       "projectName": "Almoxarifado",
-      "projectPath": "C:\\Users\\Aluno SENAI.C308-LAB3-001\\Desktop\\almoxarifado\\Almoxarifado.csproj",
-      "packagesPath": "C:\\Users\\Aluno SENAI.C308-LAB3-001\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Aluno SENAI.C308-LAB3-001\\Desktop\\almoxarifado\\obj\\",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\almoxarifado\\Almoxarifado.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Administrator\\Desktop\\almoxarifado\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Aluno SENAI.C308-LAB3-001\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -2522,6 +2523,10 @@
             "target": "Package",
             "version": "[8.0.0, )"
           },
+          "Microsoft.EntityFrameworkCore.Design": {
+            "target": "Package",
+            "version": "[8.0.0, )"
+          },
           "Microsoft.EntityFrameworkCore.Tools": {
             "target": "Package",
             "version": "[8.0.0, )"
@@ -2550,7 +2555,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.412/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
